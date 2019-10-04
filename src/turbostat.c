@@ -987,6 +987,8 @@ static int __attribute__((warn_unused_result)) probe_cpu(void) {
     /* Ivy Bridge */
     case 0x3A: /* IVB */
     case 0x3E: /* IVB Xeon */
+    case 0x55: /* SKX,CLX Xeon */
+    case 0x6A: /* ICX Xeon */
       do_smi = true;
       do_core_cstate = (1 << 3) | (1 << 6) | (1 << 7);
       do_pkg_cstate = (1 << 2) | (1 << 3) | (1 << 6) | (1 << 7);
@@ -1042,6 +1044,8 @@ static int __attribute__((warn_unused_result)) probe_cpu(void) {
       break;
     case 0x2D: /* SNB Xeon */
     case 0x3E: /* IVB Xeon */
+    case 0x55: /* SKX,CLX Xeon */
+    case 0x6A: /* ICX Xeon */
       do_rapl = RAPL_PKG | RAPL_CORES | RAPL_DRAM;
       do_power_fields = TURBO_PLATFORM | PSTATES_PLATFORM;
       break;
@@ -1434,9 +1438,9 @@ static void free_all_buffers(void) {
   package_delta = NULL;
 }
 
-/**********************
- * Collectd functions *
- **********************/
+  /**********************
+   * Collectd functions *
+   **********************/
 
 #define DO_OR_GOTO_ERR(something)                                              \
   do {                                                                         \
